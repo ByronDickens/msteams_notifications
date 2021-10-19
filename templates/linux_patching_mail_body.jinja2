@@ -1,81 +1,155 @@
-Hi, 
-<br>
-<br>
-This notification has been sent by the Ansible Automation Platform in relation to installation of system patches on Red Hat Enterprise Linux systems.
-<br>
-<br>
-<br>
-<h1> Status Before Patching </h1>
-{% if pre_patch_install_report is defined %}
-<br>
-Below is a list of the systems and their update status before updates have been installed:
-<br>
-<br>
-<br>
-<table>
-  <tr>
-    <th>Host Name</th>
-    <th>Critical Updates</th>
-    <th>Important Updates</th>
-    <th>Moderate Updates</th>
-    <th>Low Updates</th>
-    <th>Bugfix Updates</th>
-    <th>Enhancement Updates</th>
-    <th>Score</th>
-  </tr>
-{% for host in pre_patch_install_report %}
-  <tr>
-    <td>{{ host.host }}</td>
-    <td>{{ host.critical }}</td>
-    <td>{{ host.important }}</td>
-    <td>{{ host.moderate }}</td>
-    <td>{{ host.low }}</td>
-    <td>{{ host.bugfix }}</td>
-    <td>{{ host.enhancement }}</td>
-    <td>{{ host.score }}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-Pre Patch report data is not available
-{% endif %}
-<br>
-<br>
-<br>
-<h1> Status After Patching </h1>
-{% if post_patch_install_report is defined %}
-<br>
-Below is a list of the systems and their updates status after updates have been installed
-<br>
-<br>
-<br>
-<table>
-  <tr>
-    <th>Host Name</th>
-    <th>Critical Updates</th>
-    <th>Important Updates</th>
-    <th>Moderate Updates</th>
-    <th>Low Updates</th>
-    <th>Bugfix Updates</th>
-    <th>Enhancement Updates</th>
-    <th>Score</th>
-  </tr>
-{% for host in post_patch_install_report %}
-  <tr>
-    <td>{{ host.host }}</td>
-    <td>{{ host.critical }}</td>
-    <td>{{ host.important }}</td>
-    <td>{{ host.moderate }}</td>
-    <td>{{ host.low }}</td>
-    <td>{{ host.bugfix }}</td>
-    <td>{{ host.enhancement }}</td>
-    <td>{{ host.score }}</td>
-  </tr>
-  {% endfor %}
-</table>
-{% else %}
-Post Patch report data is not available
-  {% endif %}
-<br>
-<br>
-<br>
+<html>
+    <head>
+        <style>
+         #table1 {border: 3px solid lightgray; border-collapse: collapse; width: 1250px;}
+         #thleft {text-align: left; font-family: Calibri; font-size: 18pt; color: black;}
+         #thhcf {border-width: 1px; padding: 8px; border-style: solid; border-color: black; background-color: #e1004e; font-family: Calibri; font-size: 13pt;}
+         #tdhcf {border-width: 1px; padding: 8px; border-style: solid; border-color: black; font-family: Calibri; font-weight: bold; font-size: 11pt; text-align: center;}
+         #tdhcf-host {border-width: 1px; padding: 8px; border-style: solid; border-color: black; font-family: Calibri; font-size: 11pt; text-align: left;}
+         #list2 {text-indent: 25px;}
+         h1 {font-family: Calibri; font-size: 22pt; color: #e1004e;}
+         h3 {font-family: Calibri; font-size: 16pt; color: black;}
+        </style>
+    </head>
+    <body>
+        <center>
+            <table id="table1">
+                <tr>
+                    <th colspan="1">
+                        <img src="http://ic2prdnet22/images/IaC_Header.png">
+                    </th>
+                </tr>
+                <tr>
+                    <th colspan="1">
+                        <font id="hcfheader">
+                            <br><b><h1>HCF Infrastructure As Code - Red Hat Linux Patching Report</h1></b>
+                        </font>
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                    <font face="Calibri" size="3" color="#000000">
+                        <br><br>
+                        This Infrastructure as code MS Teams message has been sent by the Ansible Automation Platform in relation to scheduled installation of system patches on Red Hat Enterprise Linux hosts operational at HCF. The following report may only contain a subset of Red Hat hosts, dependent on what was targeted during change control submission(s).
+                        <br><br>
+                        For your review, please find pre-patching and post-patching statuses below.
+                        <br><br>
+                        In regards to <b>Overall Score</b>, the ideal target value is "0". This value is an aggregate. The higher the value, the more patches to install across the categories. 
+                        <br><br>
+                        <hr color=#e1004e" width="75%">
+                        <br>
+                    </font>
+                    </td>
+                </tr>
+                <tr>
+                    <th id="thleft" colspan="1">
+                        <h2></h2>Host Status Before Patching:</h2>                      
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {% if pre_patch_install_report is defined %}                        
+                        <font face="Calibri" size="3" color="#000000">
+                            <br><br>  
+                            Please find below a list of Red Hat hosts and their patch-level status before any update or patching actions have been tried.
+                            <br><br>
+                            </font>
+                                <table>
+                                    <tr>
+                                        <th id="thhcf">Host Name</th>
+                                        <th id="thhcf">Critical<br>Updates</th>
+                                        <th id="thhcf">Important<br>Updates</th>
+                                        <th id="thhcf">Moderate<br>Updates</th>
+                                        <th id="thhcf">Low<br>Updates</th>
+                                        <th id="thhcf">Bugfix<br>Updates</th>
+                                        <th id="thhcf">Enhancement<br>Updates</th>
+                                        <th id="thhcf">Overall Score</th>
+                                    </tr>
+                                    {% for host in pre_patch_install_report %}
+                                    <tr>
+                                        <td id="tdhcf-host">{{ host.host }}</td>
+                                        <td id="tdhcf">{{ host.critical }}</td>
+                                        <td id="tdhcf">{{ host.important }}</td>
+                                        <td id="tdhcf">{{ host.moderate }}</td>
+                                        <td id="tdhcf">{{ host.low }}</td>
+                                        <td id="tdhcf">{{ host.bugfix }}</td>
+                                        <td id="tdhcf">{{ host.enhancement }}</td>
+                                        <td id="tdhcf">{{ host.score }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </table>
+                                {% else %}
+                                <br><br> 
+                                <font face="Calibri" size="3" color="red"><b><u>ERROR:</u></b></font> <b>Pre Patch report data is not available, please email <a href="mailto:platform_operations@hcf.com.au">platform_operations@hcf.com.au</a></b> 
+                                <br><br>
+                                <hr color=#e1004e" width="75%">
+                                {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th id="thleft" colspan="1">
+                        Host Status After Patching:                      
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        {% if post_patch_install_report is defined %}
+                        <br><br>                        
+                        <font face="Calibri" size="3" color="#000000">
+                            Please find below a list of Red Hat hosts and their patch-level status after update and patching actions have been completed.
+                            <br><br>
+                        </font>
+                            <table>
+                                <tr>
+                                    <th id="thhcf">Host Name</th>
+                                    <th id="thhcf">Critical<br>Updates</th>
+                                    <th id="thhcf">Important<br>Updates</th>
+                                    <th id="thhcf">Moderate<br>Updates</th>
+                                    <th id="thhcf">Low<br>Updates</th>
+                                    <th id="thhcf">Bugfix<br>Updates</th>
+                                    <th id="thhcf">Enhancement<br>Updates</th>
+                                    <th id="thhcf">Overall Score</th>
+                                </tr>
+                                {% for host in post_patch_install_report %}
+                                <tr>
+                                    <td id="tdhcf-host">{{ host.host }}</td>
+                                    <td id="tdhcf">{{ host.critical }}</td>
+                                    <td id="tdhcf">{{ host.important }}</td>
+                                    <td id="tdhcf">{{ host.moderate }}</td>
+                                    <td id="tdhcf">{{ host.low }}</td>
+                                    <td id="tdhcf">{{ host.bugfix }}</td>
+                                    <td id="tdhcf">{{ host.enhancement }}</td>
+                                    <td id="tdhcf">{{ host.score }}</td>
+                                </tr>
+                                {% endfor %}
+                            </table>
+                            {% else %}
+                            <br><br>
+                            <font face="Calibri" size="3" color="red"><b><u>ERROR:</u></b></font> <b>Post Patch report data is not available, please email <a href="mailto:platform_operations@hcf.com.au">platform_operations@hcf.com.au</a></b> 
+                            <br><br>
+                            {% endif %}                            
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <hr color=#e1004e" width="75%">
+                        <h3>Contact Information:</h3>
+                        <font face="Calibri" size="3" color="#000000">
+                        If there are any problems with the patching process, post patching or you require immediate assistance, please contact Service Desk to lodge a ticket.
+                        <br><br>                      
+                        <b>Service Desk:</b>
+                        <ul>
+                            <li>Phone: <b><font color="#e1004e">02 9290 0456</font></b></li>
+                            <li>Email: <a href="mailto:sdesk@hcf.com.au">sdesk@hcf.com.au</a></li>
+                        </ul>
+                        <b>Platform Operations:</b>
+                        <ul>
+                            <li>Email: <a href="mailto:platform_operations@hcf.com.au">platform_operations@hcf.com.au</a><br><i><font size="1">Please note this email does not lodge a service request and should only be used for catastrophic reporting errors</i></font></li>
+                        </ul>
+                        </font>
+                    </td>
+                </tr>               
+            </table>
+        </center>
+    </body>
+</html>
