@@ -1,0 +1,43 @@
+---
+# tasks file for msteams_notifications
+- name: Assert that Webhook is provided
+  assert:
+    that: 
+      - msteams_webhook is defined 
+      - msteams_webhook is regex("/\w+")
+    success_msg: The variable msteams_webhook is defined.
+    fail_msg:  The variable msteams_webhook is not defined but is mandatory.
+
+- name: Advise that standardised notification variables have not been defined
+  debug:
+    msg: This role has been written to use standard inputs (notification_subject, notification_body) for notifications but they have not all been provided so the role defaults will be used.
+  when: notification_subject is not defined or notification_body is not defined    
+
+- name: Map standardised notification variables to MS Teams notification variables
+  set_fact:
+    msteams_title: "{{ notification_subject | default(none) or omit }}"
+    msteams_text: "{{ notification_body | default(none) or omit }}"
+  when: notification_subject is defined or notification_body is defined
+
+- name: Set card color to RED when notification_automation_result is 'failed'
+  set_fact:
+    msteams_color: E81123
+  when: 
+    - notification_automation_result is defined
+    - notification_automation_result == 'failed'
+
+- name: Set card color to GREEN when notification_automation_result is 'succeeded'
+  set_fact:
+    msteams_color: 10E662
+  when: 
+    - notification_automation_result is defined
+    - notification_automation_result == 'succeeded'
+
+- name: Create a Connector Card with the full format
+  community.general.office_365_connector_card:
+    webhook: "{{ msteams_webhook }}"
+    title: "{{ msteams_title | default(none) or omit }}"
+    text: "{{ msteams_text | default(none) or omit }}"
+    color: "{{ msteams_color | default(none) or omit }}"
+    sections: "{{ msteams_sections | default(none) or omit }}"
+    actions: "{{ msteams_actions | default(none) or omit }}"

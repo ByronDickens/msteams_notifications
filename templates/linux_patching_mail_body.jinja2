@@ -1,0 +1,81 @@
+Hi, 
+<br>
+<br>
+This notification has been sent by the Ansible Automation Platform in relation to installation of system patches on Red Hat Enterprise Linux systems.
+<br>
+<br>
+<br>
+<h1> Status Before Patching </h1>
+{% if pre_patch_install_report is defined %}
+<br>
+Below is a list of the systems and their update status before updates have been installed:
+<br>
+<br>
+<br>
+<table>
+  <tr>
+    <th>Host Name</th>
+    <th>Critical Updates</th>
+    <th>Important Updates</th>
+    <th>Moderate Updates</th>
+    <th>Low Updates</th>
+    <th>Bugfix Updates</th>
+    <th>Enhancement Updates</th>
+    <th>Score</th>
+  </tr>
+{% for host in pre_patch_install_report %}
+  <tr>
+    <td>{{ host.host }}</td>
+    <td>{{ host.critical }}</td>
+    <td>{{ host.important }}</td>
+    <td>{{ host.moderate }}</td>
+    <td>{{ host.low }}</td>
+    <td>{{ host.bugfix }}</td>
+    <td>{{ host.enhancement }}</td>
+    <td>{{ host.score }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+Pre Patch report data is not available
+{% endif %}
+<br>
+<br>
+<br>
+<h1> Status After Patching </h1>
+{% if post_patch_install_report is defined %}
+<br>
+Below is a list of the systems and their updates status after updates have been installed
+<br>
+<br>
+<br>
+<table>
+  <tr>
+    <th>Host Name</th>
+    <th>Critical Updates</th>
+    <th>Important Updates</th>
+    <th>Moderate Updates</th>
+    <th>Low Updates</th>
+    <th>Bugfix Updates</th>
+    <th>Enhancement Updates</th>
+    <th>Score</th>
+  </tr>
+{% for host in post_patch_install_report %}
+  <tr>
+    <td>{{ host.host }}</td>
+    <td>{{ host.critical }}</td>
+    <td>{{ host.important }}</td>
+    <td>{{ host.moderate }}</td>
+    <td>{{ host.low }}</td>
+    <td>{{ host.bugfix }}</td>
+    <td>{{ host.enhancement }}</td>
+    <td>{{ host.score }}</td>
+  </tr>
+  {% endfor %}
+</table>
+{% else %}
+Post Patch report data is not available
+  {% endif %}
+<br>
+<br>
+<br>
